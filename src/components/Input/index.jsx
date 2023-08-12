@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./style.scss"
 
 export const Input = ({ label, id, type, placeholder, register, error }) => {

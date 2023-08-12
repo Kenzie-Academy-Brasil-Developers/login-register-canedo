@@ -2,17 +2,18 @@ import { useNavigate } from "react-router-dom";
 import "./style.scss"
 import { Input } from "../Input";
 import Logo from "../../assets/Logo.svg"
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"; 
 import { formSchema } from "../formSchema";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
+import React, { useState } from "react";
 
 export const Register = ({setUser}) => {
-   const { register, handleSubmit, formState: { errors } } = useForm({
+   const { register, handleSubmit, formState: { errors, isValid } } = useForm({
       resolver: zodResolver(formSchema),
    });
-
+   
    const navigate = useNavigate()
 
    const handleLoginClick = () => {
@@ -25,14 +26,13 @@ export const Register = ({setUser}) => {
       userRegister(formData)
    }
 
-    const userRegister = async (formData) => {
+   const userRegister = async (formData) => {
       try {
       const {data} = await api.post('/users', formData);
-         
-         toast.success("Usuário registrado com sucesso!");
+         toast.success("Usuário registrado com sucesso!")
+         navigate("/login")
       } catch (error) {
       console.log(error.message)
-
          toast.error("Ocorreu um erro ao registrar o usuário.")
       }
    }
@@ -103,9 +103,14 @@ export const Register = ({setUser}) => {
                      <option value="Quarto módulo (Backend Avançado)">Quarto módulo (Backend Avançado)</option>
                   </select>
                </div>
-               <button className="buttonRegister" type="submit">Cadastrar</button>
+               <button
+                  className={`buttonRegister ${isValid ? 'validButton' : 'invalidButton'}`}
+                  type="submit"
+                  disabled={!isValid}
+                  >Cadastrar
+               </button>
             </div>
         </form>
       </section>
-   );
-};
+   )
+}

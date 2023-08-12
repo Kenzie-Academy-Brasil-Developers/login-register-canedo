@@ -1,33 +1,40 @@
-import { useState } from "react";
-import { Input } from "../Input";
-import "./style.scss"
 import { useNavigate } from "react-router-dom";
+import "./style.scss"
+import { Input } from "../Input";
 import Logo from "../../assets/Logo.svg"
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "../formSchema";
+import { api } from "../../services/api";
+import { toast } from "react-toastify";
 
 export const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(formSchema),
- })
-
+  const { register, handleSubmit} = useForm()
   const navigate = useNavigate()
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const submit = (formData) => {
+    userRegister(formData)
+  }
 
   const handleRegisterClick = () => {
     navigate("/register")
-  };
+  }
 
+  const userRegister = async (formData) => {
+    try {
+    const {data} = await api.post('/sessions', formData)
+      localStorage.setItem("token", data.token)
+      toast.success("Bem-vindo! Login realizado com sucesso.")
+      navigate("/")
+    } catch (error) {
+    console.log(error.message)
+      toast.error("Ocorreu um erro ao fazer o login. Verifique suas credenciais e tente novamente.")
+    }
+  }
 
    return (
     <main>
       <section>
         <img src={Logo} alt="logo Kenzie"/>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(submit)}>
           <h2 className="title1">Login</h2>
           <div>
             <Input
@@ -36,15 +43,15 @@ export const Login = () => {
               placeholder="Digite seu email"
               type="email"
               register = {register("email")}
-              error={errors.email}
+              
             />
             <Input
-              id="senha"
+              id="password"
               label="Senha"
               placeholder="Digite sua senha"
               type="password"
               register = {register("password")}
-              error={errors.password}
+              
             />
             <button className="buttonLogin" type="submit">Entrar</button>
             <p className="text1">Ainda não possui uma conta?</p>

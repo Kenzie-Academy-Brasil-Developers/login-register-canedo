@@ -1,13 +1,34 @@
 import { useNavigate } from "react-router-dom"
 import Logo from "../../assets/Logo.svg"
 import "./style.scss"
+import { useEffect, useState } from "react"
+import { api } from "../../services/api"
 
 export const Home = () => {
   const navigate = useNavigate()
+
+  const [name, setName] = useState("")
+  const [courseModule, setCourseModule] = useState("")
   
   const handleExitClick = () => {
+    localStorage.removeItem("token");
     navigate("/login")
-  };
+  }
+
+  const getUserInfo = async () => {
+    try {
+      const response = await api.get("/profile")
+      const { name, course_module } = response.data
+      setName(name)
+      setCourseModule(course_module)
+    } catch (error) {
+      console.error("Erro ao obter informações do usuário:", error)
+    }
+  }
+
+  useEffect(() => {
+    getUserInfo()
+  }, [])
   
   return(
     <>
@@ -17,8 +38,8 @@ export const Home = () => {
       </header>
       <main>
         <div className="containerPrimary">
-          <h2 className="title1">Olá, Samuel</h2>
-          <p className="text1">Primeiro Modulo</p>
+          <h2 className="title1">Olá, {name}</h2>
+          <p className="text1">{courseModule}</p>
         </div>
         <div className="containerSecundary">
           <h2 className="title1">Que pena! Estamos em desenvolvimento :(</h2>
