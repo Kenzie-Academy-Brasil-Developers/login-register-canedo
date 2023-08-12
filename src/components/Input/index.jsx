@@ -1,15 +1,19 @@
-export const Input = ({ label, id, type, placeholder, value, setValue }) => {
-  return (
+import { useState } from "react";
+import "./style.scss"
+
+export const Input = ({ label, id, type, placeholder, register, error }) => {
+   return (
      <div>
         <label htmlFor={id}>{label}</label>
         <input
-           placeholder={placeholder}
-           type={type}
-           name={id}
-           id={id}
-           value={value}
-           onChange={(event) => setValue(event.target.value)}
-        />
+            className="placeholder"
+            placeholder={placeholder}
+            type={type}
+            name={id}
+            id={id}
+            {...register}
+            />
+            {error? <p className="error">{error.message}</p> : null}
      </div>
   );
 };

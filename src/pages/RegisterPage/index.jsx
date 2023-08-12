@@ -1,10 +1,10 @@
 import { Register } from "../../components/Register";
 
 
-export const RegisterPage = ({  }) => {
+export const RegisterPage = ({setUser}) => {
    return (
       <>
-      <Register/>
+         <Register setUser={setUser}/>
       </>
    );
 };

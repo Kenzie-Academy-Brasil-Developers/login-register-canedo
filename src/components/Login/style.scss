@@ -1,0 +1,51 @@
+
+main{
+  section{
+    background-color: var(--color-grey4);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img{
+      width: 144px;
+    }
+    
+    form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 42px 22px;
+      margin-top: 35px;
+      border-radius: 4px;
+      background: var(--color-grey3);
+      box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+      
+      div{
+        display: flex;
+        flex-direction: column;
+       
+        p{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        .buttonLogin{
+          margin: 10px 0px;
+          height: 48px;
+          background: var(--color-primary);
+        }
+
+        .buttonRegister{
+          margin: 10px 0px;
+          height: 48px;
+          background: var(--color-grey1);
+        }
+      }
+    }
+  }
+}

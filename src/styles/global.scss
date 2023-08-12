@@ -15,3 +15,18 @@
   --color-negative: #E83F5B;
   --font-family: 'Inter', sans-serif;
 }
+
+button{
+  display: inline-flex;
+  height: 40px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-grey0);
+  border-radius: 4px;
+}
+
