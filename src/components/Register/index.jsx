@@ -17,12 +17,11 @@ export const Register = ({setUser}) => {
    const navigate = useNavigate()
 
    const handleLoginClick = () => {
-     navigate("/login")
+     navigate("/")
    };
 
 
    const submit = (formData) => {
-      console.log(formData)
       userRegister(formData)
    }
 
@@ -30,9 +29,8 @@ export const Register = ({setUser}) => {
       try {
       const {data} = await api.post('/users', formData);
          toast.success("Usuário registrado com sucesso!")
-         navigate("/login")
+         navigate("/")
       } catch (error) {
-      console.log(error.message)
          toast.error("Ocorreu um erro ao registrar o usuário.")
       }
    }

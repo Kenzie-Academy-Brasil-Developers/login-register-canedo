@@ -22,10 +22,8 @@ export const Login = () => {
     try {
     const {data} = await api.post('/sessions', formData)
       localStorage.setItem("token", data.token)
-      toast.success("Bem-vindo! Login realizado com sucesso.")
-      navigate("/")
+      navigate("/home")
     } catch (error) {
-    console.log(error.message)
       toast.error("Ocorreu um erro ao fazer o login. Verifique suas credenciais e tente novamente.")
     }
   }

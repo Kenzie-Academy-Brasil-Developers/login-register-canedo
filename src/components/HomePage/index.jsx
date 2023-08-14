@@ -3,28 +3,43 @@ import Logo from "../../assets/Logo.svg"
 import "./style.scss"
 import { useEffect, useState } from "react"
 import { api } from "../../services/api"
+import { toast } from "react-toastify"
 
 export const Home = () => {
   const navigate = useNavigate()
 
-  const [name, setName] = useState("")
-  const [courseModule, setCourseModule] = useState("")
+  let [name, setName] = useState("")
+  let [courseModule, setCourseModule] = useState("")
   
   const handleExitClick = () => {
     localStorage.removeItem("token");
-    navigate("/login")
+    navigate("/")
   }
 
   const getUserInfo = async () => {
     try {
-      const response = await api.get("/profile")
-      const { name, course_module } = response.data
-      setName(name)
-      setCourseModule(course_module)
+      const token = localStorage.getItem("token")
+      if (token) {
+        const response = await api.get("/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        const user = response.data.name
+        const course = response.data.course_module
+        setName(user)
+        setCourseModule(course)
+      }
     } catch (error) {
-      console.error("Erro ao obter informações do usuário:", error)
+      toast.error("Erro ao obter informações do usuário:")
     }
   }
+
+  useEffect(() => {
+    if (name && courseModule) {
+      toast.success(`Bem-vindo ${name}! Login realizado com sucesso`);
+    }
+  }, [name, courseModule]);
 
   useEffect(() => {
     getUserInfo()
