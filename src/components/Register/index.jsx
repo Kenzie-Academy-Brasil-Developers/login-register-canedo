@@ -5,11 +5,10 @@ import Logo from "../../assets/Logo.svg"
 import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"; 
 import { formSchema } from "../formSchema";
-import { api } from "../../services/api";
-import { toast } from "react-toastify";
-import React, { useState } from "react";
+import React, { useContext} from "react";
+import { UserContext } from "../../providers/UserContext";
 
-export const Register = ({setUser}) => {
+export const Register = () => {
    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
       resolver: zodResolver(formSchema),
    });
@@ -20,19 +19,10 @@ export const Register = ({setUser}) => {
      navigate("/")
    };
 
+   const { userRegister } = useContext(UserContext)
 
    const submit = (formData) => {
       userRegister(formData)
-   }
-
-   const userRegister = async (formData) => {
-      try {
-      const {data} = await api.post('/users', formData);
-         toast.success("Usuário registrado com sucesso!")
-         navigate("/")
-      } catch (error) {
-         toast.error("Ocorreu um erro ao registrar o usuário.")
-      }
    }
 
 

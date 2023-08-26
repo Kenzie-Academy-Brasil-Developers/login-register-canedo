@@ -1,60 +1,21 @@
-import { useNavigate } from "react-router-dom"
 import Logo from "../../assets/Logo.svg"
 import "./style.scss"
-import { useEffect, useState } from "react"
-import { api } from "../../services/api"
-import { toast } from "react-toastify"
+import { useContext, useEffect, useState } from "react"
+import { UserContext } from "../../providers/UserContext"
 
 export const Home = () => {
-  const navigate = useNavigate()
-
-  let [name, setName] = useState("")
-  let [courseModule, setCourseModule] = useState("")
+  const { user, userLogout } = useContext(UserContext);
   
-  const handleExitClick = () => {
-    localStorage.removeItem("token");
-    navigate("/")
-  }
-
-  const getUserInfo = async () => {
-    try {
-      const token = localStorage.getItem("token")
-      if (token) {
-        const response = await api.get("/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        const user = response.data.name
-        const course = response.data.course_module
-        setName(user)
-        setCourseModule(course)
-      }
-    } catch (error) {
-      toast.error("Erro ao obter informações do usuário:")
-    }
-  }
-
-  useEffect(() => {
-    if (name && courseModule) {
-      toast.success(`Bem-vindo ${name}! Login realizado com sucesso`);
-    }
-  }, [name, courseModule]);
-
-  useEffect(() => {
-    getUserInfo()
-  }, [])
-  
-  return(
+   return(
     <>
       <header>
           <img src={Logo} alt="logo Kenzie"/>
-          <button onClick={handleExitClick}>Sair</button>
+          <button onClick={() => userLogout()}>Sair</button>
       </header>
       <main>
         <div className="containerPrimary">
-          <h2 className="title1">Olá, {name}</h2>
-          <p className="text1">{courseModule}</p>
+          <h2 className="title1">Olá, {user?.name}</h2>
+          <p className="text1">{user?.course_module}</p>
         </div>
         <div className="containerSecundary">
           <h2 className="title1">Que pena! Estamos em desenvolvimento :(</h2>

@@ -3,29 +3,21 @@ import "./style.scss"
 import { Input } from "../Input";
 import Logo from "../../assets/Logo.svg"
 import { useForm } from "react-hook-form";
-import { api } from "../../services/api";
-import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 
 export const Login = () => {
   const { register, handleSubmit} = useForm()
   const navigate = useNavigate()
+  
+  const {userLogin} = useContext(UserContext)
 
   const submit = (formData) => {
-    userRegister(formData)
+    userLogin(formData)
   }
 
   const handleRegisterClick = () => {
     navigate("/register")
-  }
-
-  const userRegister = async (formData) => {
-    try {
-    const {data} = await api.post('/sessions', formData)
-      localStorage.setItem("token", data.token)
-      navigate("/home")
-    } catch (error) {
-      toast.error("Ocorreu um erro ao fazer o login. Verifique suas credenciais e tente novamente.")
-    }
   }
 
    return (
