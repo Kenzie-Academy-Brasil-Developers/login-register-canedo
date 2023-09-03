@@ -1,0 +1,28 @@
+
+.contentList{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  span{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    button{
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 4px;
+    background: #212529;
+  }
+
+
+}

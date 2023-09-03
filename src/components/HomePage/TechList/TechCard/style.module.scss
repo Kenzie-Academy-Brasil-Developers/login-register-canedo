@@ -1,0 +1,23 @@
+
+.cardBox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  border-radius: 4px;
+  background: #121214;
+  height: 49px;
+  padding: 10px;
+
+  div{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    button{
+      height: 25px;
+      width: 19px;
+      background-color: transparent;
+    }
+  }
+}
